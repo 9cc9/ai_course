@@ -8,6 +8,7 @@ app = Flask(__name__)
 
 ##########################
 # how to use
+# 简单版本http_server
 # curl -X POST http://localhost:8080/chat -H "Content-Type: application/json" -d '{"message": "鞋子有哪些尺码可以选择呢"}'
 ##########################
 
