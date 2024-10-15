@@ -4,7 +4,7 @@ import atexit
 
 
 # 创建数据库连接
-db = MySQLDatabase('spring_boot_demo', user='root', password='Gmy900925', host='localhost')
+db = MySQLDatabase('spring_boot_demo', user='root', password='', host='localhost')
 
 # 定义模型
 class AiContext(Model):
