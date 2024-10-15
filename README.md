@@ -3,6 +3,11 @@
 ## 1.准备工作
 1. 安装python&pip
 2. pip install -r requirements.txt
+3. 安装mysql server
+4. 导入知识库数据到mysql
+    * 新建数据库
+    * [schema.sql](data%2Fschema.sql) 执行建表语句
+    * [ai_context.sql](data%2Fai_context.sql) 导入数据
 
 ## 2.chat
 **基于知识库实现一个简单的聊天对话**
