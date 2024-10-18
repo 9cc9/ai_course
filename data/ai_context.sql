@@ -12,3 +12,12 @@ INSERT INTO `ai_context`(`text`) VALUES ('鞋垫:使用高弹性材料，提供�
 INSERT INTO `ai_context`(`text`) VALUES ('颜色:提供红、橙、黄、蓝四种颜色可以选择');
 INSERT INTO `ai_context`(`text`) VALUES ('如何选择合适的尺码:建议参考我们提供的尺码表，根据自己的脚长选择合适的尺码。');
 INSERT INTO `ai_context`(`text`) VALUES ('能否更改已下的订单:未发货商品可直接线上修改订单，已经发货则不能更改。');
+INSERT INTO `ai_context`(`text`) VALUES ('品牌信息: 提供Adidas、Nike、Puma、Reebok、New Balance、Asics、Under Armour等多个知名运动鞋品牌，另有Converse、Vans等休闲时尚品牌，以及Gucci、Balenciaga等高端奢侈品牌鞋款。');
+INSERT INTO `ai_context`(`text`) VALUES ('价格区间:200-500元，适合追求性价比的消费者，主要为基础款运动鞋。');
+INSERT INTO `ai_context`(`text`) VALUES ('中端价格区间：500-1000元，适合日常运动和休闲穿着。');
+INSERT INTO `ai_context`(`text`) VALUES ('高端价格区间：1000元以上，适合专业运动员或追求品牌和设计的消费者。');
+INSERT INTO `ai_context`(`text`) VALUES ('鞋款类型:跑步鞋、篮球鞋、足球鞋、训练鞋、休闲鞋、板鞋');
+INSERT INTO `ai_context`(`text`) VALUES ('尺码选择:儿童款（尺码范围为30-36）；成人款（尺码范围为36-48，覆盖大多数成年人的需求）。');
+INSERT INTO `ai_context`(`text`) VALUES ('个性化定制: 提供个性化定制服务，可选择颜色、鞋面材质和鞋带款式，打造专属鞋款。');
+INSERT INTO `ai_context`(`text`) VALUES ('保养方法: 定期清洁鞋垫，避免鞋子在潮湿环境下长时间存放，防止鞋底老化。');
+INSERT INTO `ai_context`(`text`) VALUES ('延长保修服务: 提供延长保修服务，最多可延长至一年，涵盖鞋子的材料与工艺问题。');

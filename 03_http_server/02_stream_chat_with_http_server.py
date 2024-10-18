@@ -21,7 +21,7 @@ The following context contains the only factual information you should consider.
 You must strictly use the information from the context to answer the question.
 Do not use any outside knowledge. If the context does not have the answer,
 respond with "The answer is not provided in the context."
-如果用户对你表达了希望对话结束或者没有问题的含义，请给用户返回:感谢您的咨询，再见！"""
+如果用户对你表达了希望对话结束的含义，请给用户返回:感谢您的咨询，再见！"""
 
 # 流式响应生成器
 def stream_response(messages):
@@ -32,7 +32,6 @@ def stream_response(messages):
         tmp = response.delta
         print(tmp)
         yield tmp + '\n'  # 使用 yield 将结果逐步返回
-        time.sleep(0.1)  # 模拟延迟，可以根据实际情况调整
 
 @app.route('/streamChat', methods=['POST'])
 def streamChat():
