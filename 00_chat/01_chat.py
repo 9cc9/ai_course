@@ -14,16 +14,24 @@ messages = [
 
 while True:
     # 获取用户输入
-    user_input = input("用户: ")
+    user_input = input("\n用户: ")
     messages.append(ChatMessage(role=MessageRole.USER, content=user_input))
 
     # 调用 LLM 生成答案
     llm_response = dashscope_llm.chat(messages)
-    print(f"助手: {llm_response.message.content}")
+    content = llm_response.message.content
+    print(f"助手: {content}")
+
+    # llm_response = dashscope_llm.stream_chat(messages)
+    # content = ""
+    # for response in llm_response:
+    #     tmp_resp = response.delta
+    #     print(tmp_resp, end="")
+    #     content += tmp_resp
 
     # 将助手的回复添加到消息中
-    messages.append(ChatMessage(role=MessageRole.ASSISTANT, content=llm_response.message.content))
+    messages.append(ChatMessage(role=MessageRole.ASSISTANT, content=content))
 
     # 检查 LLM 的响应是否包含退出关键词
-    if "再见" in llm_response.message.content:
+    if "再见" in content:
         break
