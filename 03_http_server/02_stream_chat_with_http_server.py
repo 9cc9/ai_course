@@ -29,7 +29,6 @@ def stream_response(messages):
     for response in responses:
         # 每次获取到新生成的部分，发送给客户端
         tmp = response.delta
-        print(tmp)
         yield tmp + '\n'  # 使用 yield 将结果逐步返回
 
 @app.route('/streamChat', methods=['POST'])
