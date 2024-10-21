@@ -2,7 +2,6 @@ from flask import Flask, request, jsonify, Response
 from llama_index.core.base.llms.types import MessageRole, ChatMessage
 from base.init_chat import dashscope_llm, retrieve
 import faiss
-import time
 
 app = Flask(__name__)
 

@@ -27,7 +27,10 @@
 
 ## [03_http_server](03_http_server)
 **开放服务给到springboot应用使用**
+1. [01_chat_with_http_server.py](03_http_server%2F01_chat_with_http_server.py) 页面上需要等待AI完整返回后输出结果
+2. [02_stream_chat_with_http_server.py](03_http_server%2F02_stream_chat_with_http_server.py) 支持流式输出，python侧调用stream_chat接口，java侧引入Flux实现
 
 注意：需要先运行[01_write_to_faiss.py](01_chat%2F01_write_to_faiss.py) ，准备faiss文件
 
 springboot应用地址：https://github.com/9cc9/ai_manager
+
