@@ -7,7 +7,10 @@ from base.init_chat import dashscope_llm
 
 # 初始化模型和索引（省略初始化代码）
 system_content = f"""
-如果用户对你表达了希望对话结束或者没有问题的含义，请给用户返回:感谢您的咨询，再见！"""
+基于以下给出的已知信息, 准守规范约束，专业、简要回答用户的问题.
+1.如果用户表示没有问题了，请说"感谢您的咨询，再见！"
+"""
+
 messages = [
     ChatMessage(role=MessageRole.SYSTEM, content=system_content)
 ]
