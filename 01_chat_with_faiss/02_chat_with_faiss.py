@@ -16,11 +16,11 @@ faiss_read_index = faiss.read_index('../output/faiss_index_test_shop.index')
 
 # 构造prompt
 system_content = f"""
-The following context contains the only factual information you should consider.
-You must strictly use the information from the context to answer the question.
-Do not use any outside knowledge. If the context does not have the answer,
-respond with "The answer is not provided in the context.
-如果用户对你表达了希望对话结束或者没有问题的含义，请给用户返回:感谢您的咨询，再见！"""
+基于以下给出的已知信息, 准守规范约束，专业、简要回答用户的问题.
+1.如果无法从提供的内容中获取答案, 请说: "知识库中提供的内容不足以回答此问题" 禁止胡乱编造.
+2.如果用户表示没有问题了，请说"感谢您的咨询，再见！"
+"""
+
 messages = [
     ChatMessage(role=MessageRole.SYSTEM, content=system_content)
 ]

@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 from llama_index.legacy.vector_stores.faiss import FaissVectorStore
 from base.models import *
-from base.init_chat import tongyi_embedding
+from base.init_chat import tongyi_load_embedding
 
 
 ###############################################
@@ -26,7 +26,7 @@ for chunk in pd.read_csv('../data/运动鞋店铺知识库.txt', sep='\t', names
 
     # 批量生成 embeddings
     try:
-        batch_embeddings = tongyi_embedding.get_text_embedding_batch(batch_texts)
+        batch_embeddings = tongyi_load_embedding.get_text_embedding_batch(batch_texts)
     except Exception as e:
         print(f"Error in embedding generation: {e}")
         continue
