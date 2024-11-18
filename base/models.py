@@ -1,37 +1,4 @@
-import requests
-import asyncio
-from llama_index.embeddings.openai.base import BaseEmbedding
-from pydantic import BaseModel, Field
 from llama_index.legacy.schema import BaseNode
-
-
-# 定义通义千问嵌入模型类^
-class TongyiEmbedding(BaseEmbedding, BaseModel):
-    api_url: str = Field(...)
-    api_key: str = Field(...)
-    model_name: str = Field(...)
-
-    def _get_text_embedding(self, text):
-        """实现文本嵌入"""
-        return self.embed([text])  # 调用 embed 函数来处理单个文本
-
-    def _get_query_embedding(self, query):
-        """实现查询嵌入"""
-        return self.embed([query])  # 调用 embed 函数来处理查询
-
-    async def _aget_query_embedding(self, query):
-        """实现异步查询嵌入"""
-        return await asyncio.to_thread(self._get_query_embedding, query)
-
-    def embed(self, texts):
-        headers = {
-            "Authorization": f"Bearer {self.api_key}",
-            "Content-Type": "application/json"
-        }
-        response = requests.post(self.api_url, headers=headers, json={"model": self.model_name, "input": texts})
-        response_data = response.json()
-        embeddings = [data.get('embedding', []) for data in response_data.get("data", [])]
-        return embeddings
 
 
 # 定义自定义节点类

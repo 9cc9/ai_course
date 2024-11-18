@@ -3,6 +3,8 @@ import numpy as np
 import pandas as pd
 from llama_index.legacy.vector_stores.faiss import FaissVectorStore
 from base.models import *
+from base.init_chat import tongyi_embedding
+
 
 ###############################################
 # 将知识库数据embedding化，写入到faiss向量库
@@ -12,12 +14,6 @@ from base.models import *
 
 
 # 配置初始化
-# 使用通义千问的 API 初始化嵌入模型
-tongyi_embedding = TongyiEmbedding(
-    api_url="https://dashscope.aliyuncs.com/compatible-mode/v1/embeddings",
-    api_key="sk-6267c004c2ac41d69c098628660f41d0",
-    model_name="text-embedding-v1"
-)
 
 # 流式读取数据，每次读取5行(优化大文件读取)
 chunk_size = 5
@@ -29,7 +25,12 @@ for chunk in pd.read_csv('../data/运动鞋店铺知识库.txt', sep='\t', names
     batch_texts = chunk['passage'].tolist()
 
     # 批量生成 embeddings
-    batch_embeddings = tongyi_embedding.embed(batch_texts)
+    try:
+        batch_embeddings = tongyi_embedding.get_text_embedding_batch(batch_texts)
+    except Exception as e:
+        print(f"Error in embedding generation: {e}")
+        continue
+
     for i, row in enumerate(chunk.itertuples()):
         doc_text = row.passage
         texts.append(doc_text)
