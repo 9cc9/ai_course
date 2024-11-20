@@ -49,5 +49,6 @@ faiss_store = FaissVectorStore(faiss_index=faiss_index)
 # 添加节点到 FAISS 向量存储
 faiss_store.add(nodes)  # 直接添加节点
 # 保存 FAISS 索引到文件
-faiss.write_index(faiss_index, '../output/faiss_index_test_shop.index')
+faiss_store.persist(persist_path='../output/faiss_index_test_shop.index')
+# faiss.write_index(faiss_index, '../output/faiss_index_test_shop.index')
 print("============write index successfully")
