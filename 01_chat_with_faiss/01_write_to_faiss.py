@@ -21,6 +21,7 @@ embeddings = []
 texts = []
 nodes = []
 
+# TODO：考虑多线程并发执行
 for chunk in pd.read_csv('../data/运动鞋店铺知识库.txt', sep='\t', names=['passage'], chunksize=chunk_size):
     batch_texts = chunk['passage'].tolist()
 
@@ -42,6 +43,10 @@ for chunk in pd.read_csv('../data/运动鞋店铺知识库.txt', sep='\t', names
 embeddings_np = np.array(embeddings).astype('float32')
 
 # 初始化faiss，embedding索引长度embeddings_np.shape[1]=1536
+# IndexFlat：最基础的索引类型，直接存储所有向量并进行精确的搜索，适合小规模数据集或对精度要求非常高的场景。
+# IndexFlatL2 是一种基于欧式距离（L2 距离）的索引类型，用于精确地进行向量的最近邻搜索，适合小规模数据集或对精度要求较高的场景。
+# IndexAnnoy 基于树的近似最近邻搜索方法（Annoy），适合中等规模的数据集，查询速度较快，适用于内存和速度的平衡需求。
+# IndexIVFPQ：将倒排文件（IVF）和产品量化（PQ）结合的索引类型，通过量化压缩向量并对簇内数据进行检索，适合大规模数据集且对内存和查询速度有双重要求。
 faiss_index = faiss.IndexFlatL2(embeddings_np.shape[1])
 
 # 初始化并写入 FAISS 向量存储
