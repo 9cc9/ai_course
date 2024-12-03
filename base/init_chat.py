@@ -1,6 +1,7 @@
 import numpy as np
 from llama_index.llms.dashscope import DashScope
 from base.db_models import AiContext
+import os
 from llama_index.embeddings.dashscope import (
     DashScopeEmbedding,
     DashScopeTextEmbeddingModels,
@@ -9,7 +10,7 @@ from llama_index.embeddings.dashscope import (
 
 LLM_MODEL = "qwen-turbo"
 EMBED_MODEL = "text-embedding-v1"
-API_KEY = "sk-6267c004c2ac41d69c098628660f41d0"
+API_KEY = os.getenv('API_KEY')
 
 # 配置初始化
 
@@ -17,13 +18,13 @@ API_KEY = "sk-6267c004c2ac41d69c098628660f41d0"
 tongyi_query_embedding = DashScopeEmbedding(
     model_name=DashScopeTextEmbeddingModels.TEXT_EMBEDDING_V3,
     text_type=DashScopeTextEmbeddingType.TEXT_TYPE_QUERY,
-    api_key='sk-6267c004c2ac41d69c098628660f41d0'
+    api_key=API_KEY
 )
 
 tongyi_load_embedding = DashScopeEmbedding(
     model_name=DashScopeTextEmbeddingModels.TEXT_EMBEDDING_V3,
     text_type=DashScopeTextEmbeddingType.TEXT_TYPE_DOCUMENT,
-    api_key='sk-6267c004c2ac41d69c098628660f41d0'
+    api_key=API_KEY
 )
 
 # 创建 DashScope LLM
