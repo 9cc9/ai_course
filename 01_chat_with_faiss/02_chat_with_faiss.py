@@ -46,6 +46,6 @@ while True:
     messages.append(ChatMessage(role=MessageRole.ASSISTANT, content=llm_response.message.content))
 
     # 检查 LLM 的响应是否包含退出关键词
-    if "再见" in llm_response.message.content or "退出" in llm_response.message.content:
+    if "再见" in llm_response.message.content:
         print("===========conversation finish!")
         break
