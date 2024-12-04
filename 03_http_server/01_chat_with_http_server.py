@@ -36,8 +36,10 @@ def chat():
             ChatMessage(role=MessageRole.SYSTEM, content=system_content)
         ]
 
-        for message in request.json.get('historyMessages'):
-            messages.append(ChatMessage(role=message.get("role"), content=message.get("content")))
+        history_messages = request.json.get('historyMessages')
+        if history_messages:
+            for message in request.json.get('historyMessages'):
+                messages.append(ChatMessage(role=message.get("role"), content=message.get("content")))
 
         messages.append(ChatMessage(role=MessageRole.USER, content=user_input))
 
@@ -60,7 +62,7 @@ def chat():
         return jsonify({'response': response_content}), 200
     except Exception as e:
         print(f"[ERROR]runtime exception:{e}")
-        return jsonify({'ERROR_CODE': "SYSTEM_EXCEPTION"}), 500
+        return jsonify({'error': f"{str(e)}"}), 500
 
 
 if __name__ == '__main__':
