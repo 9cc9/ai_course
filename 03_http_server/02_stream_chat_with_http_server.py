@@ -21,6 +21,7 @@ system_content = f"""
 2.如果用户表示没有问题了，请说"感谢您的咨询，再见！"
 """
 
+
 # 流式响应生成器
 def stream_response(messages):
     # 调用LLM的流式接口
@@ -29,6 +30,7 @@ def stream_response(messages):
         # 每次获取到新生成的部分，发送给客户端
         tmp = response.delta
         yield tmp + '\n'  # 使用 yield 将结果逐步返回
+
 
 @app.route('/streamChat', methods=['POST'])
 def streamChat():
@@ -54,40 +56,45 @@ def streamChat():
     # 返回流式响应
     return Response(stream_response(messages), mimetype='text/plain')
 
+
 # 保留非流式接口，创建会话时使用
 @app.route('/chat', methods=['POST'])
 def chat():
-    user_input = request.json.get('message')
-    if not user_input:
-        return jsonify({'error': 'No message provided.'}), 400
+    try:
+        user_input = request.json.get('message')
+        if not user_input:
+            return jsonify({'error': 'No message provided.'}), 400
 
-    # 初始化本次请求
-    messages = [
-        ChatMessage(role=MessageRole.SYSTEM, content=system_content)
-    ]
+        # 初始化本次请求
+        messages = [
+            ChatMessage(role=MessageRole.SYSTEM, content=system_content)
+        ]
 
-    for message in request.json.get('historyMessages'):
-        messages.append(ChatMessage(role=message.get("role"), content=message.get("content")))
+        for message in request.json.get('historyMessages'):
+            messages.append(ChatMessage(role=message.get("role"), content=message.get("content")))
 
-    messages.append(ChatMessage(role=MessageRole.USER, content=user_input))
+        messages.append(ChatMessage(role=MessageRole.USER, content=user_input))
 
-    # 检索上下文
-    context = retrieve(user_input, faiss_read_index)
-    context_str = system_content + "\nContext:".join(context)
-    messages.append(ChatMessage(role=MessageRole.SYSTEM, content=context_str))
+        # 检索上下文
+        context = retrieve(user_input, faiss_read_index)
+        context_str = system_content + "\nContext:".join(context)
+        messages.append(ChatMessage(role=MessageRole.SYSTEM, content=context_str))
 
-    # 调用 LLM 生成答案
-    llm_response = dashscope_llm.chat(messages)
-    response_content = llm_response.message.content
-    messages.append(ChatMessage(role=MessageRole.ASSISTANT, content=response_content))
+        # 调用 LLM 生成答案
+        llm_response = dashscope_llm.chat(messages)
+        response_content = llm_response.message.content
+        messages.append(ChatMessage(role=MessageRole.ASSISTANT, content=response_content))
 
-    # 检查退出条件
-    if "再见" in response_content or "退出" in response_content:
-        print("===========conversation finish!")
-        return jsonify({'response': response_content, 'status': 'end'})
+        # 检查退出条件
+        if "再见" in response_content:
+            print("===========conversation finish!")
+            return jsonify({'response': response_content, 'status': 'end'}), 200
 
-    print(f"助手: {response_content}")
-    return jsonify({'response': response_content}), 200, {'Content-Type': 'application/json; charset=utf-8'}
+        print(f"助手: {response_content}")
+        return jsonify({'response': response_content}), 200
+    except Exception as e:
+        print(f"[ERROR]runtime exception:{e}")
+        return jsonify({'ERROR_CODE': "SYSTEM_EXCEPTION"}), 500
 
 
 if __name__ == '__main__':
