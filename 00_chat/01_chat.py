@@ -21,16 +21,16 @@ while True:
     messages.append(ChatMessage(role=MessageRole.USER, content=user_input))
 
     # 调用 LLM 生成答案
-    llm_response = dashscope_llm.chat(messages)
-    content = llm_response.message.content
-    print(f"助手: {content}")
+    # llm_response = dashscope_llm.chat(messages)
+    # content = llm_response.message.content
+    # print(f"助手: {content}")
 
-    # llm_response = dashscope_llm.stream_chat(messages)
-    # content = ""
-    # for response in llm_response:
-    #     tmp_resp = response.delta
-    #     print(tmp_resp, end="")
-    #     content += tmp_resp
+    llm_response = dashscope_llm.stream_chat(messages)
+    content = ""
+    for response in llm_response:
+        tmp_resp = response.delta
+        print(tmp_resp, end="")
+        content += tmp_resp
 
     # 将助手的回复添加到消息中
     messages.append(ChatMessage(role=MessageRole.ASSISTANT, content=content))
